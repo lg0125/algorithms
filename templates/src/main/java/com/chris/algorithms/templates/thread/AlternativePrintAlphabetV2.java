@@ -18,13 +18,9 @@ public class AlternativePrintAlphabetV2 {
     public static void printA() {
         lock.lock();
         try {
-            if(!isPrintA)
-                CONDITION_MAP.get("A").await();
-
+            if(!isPrintA) CONDITION_MAP.get("A").await();
             System.out.print("A");
-
             isPrintA = !isPrintA;
-
             CONDITION_MAP.get("B").signal();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -36,13 +32,9 @@ public class AlternativePrintAlphabetV2 {
     public static void printB() {
         lock.lock();
         try {
-            if(isPrintA)
-                CONDITION_MAP.get("B").await();
-
+            if(isPrintA) CONDITION_MAP.get("B").await();
             System.out.print("B");
-
             isPrintA = !isPrintA;
-
             CONDITION_MAP.get("A").signal();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -53,13 +45,10 @@ public class AlternativePrintAlphabetV2 {
 
     public static void main(String[] args) {
         new Thread(() -> {
-            for(int i = 0; i < 10; ++i)
-                AlternativePrintAlphabetV2.printA();
+            for(int i = 0; i < 10; ++i) AlternativePrintAlphabetV2.printA();
         }).start();
-
         new Thread(() -> {
-            for(int i = 0; i < 10; ++i)
-                AlternativePrintAlphabetV2.printB();
+            for(int i = 0; i < 10; ++i) AlternativePrintAlphabetV2.printB();
         }).start();
     }
 }

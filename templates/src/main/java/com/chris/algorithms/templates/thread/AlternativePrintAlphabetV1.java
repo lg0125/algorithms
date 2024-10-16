@@ -15,11 +15,8 @@ public class AlternativePrintAlphabetV1 {
                     System.out.println(e.getMessage());
                 }
             }
-
             System.out.print("A");
-
             isPrintA = !isPrintA;
-
             lock.notify();
         }
     }
@@ -33,24 +30,18 @@ public class AlternativePrintAlphabetV1 {
                     System.out.println(e.getMessage());
                 }
             }
-
             System.out.print("B");
-
             isPrintA = !isPrintA;
-
             lock.notify();
         }
     }
 
     public static void main(String[] args) {
         new Thread(() -> {
-            for(int i = 0; i < 10; ++i)
-                AlternativePrintAlphabetV1.printA();
+            for(int i = 0; i < 10; ++i) AlternativePrintAlphabetV1.printA();
         }).start();
-
         new Thread(() -> {
-            for(int i = 0; i < 10; ++i)
-                AlternativePrintAlphabetV1.printB();
+            for(int i = 0; i < 10; ++i) AlternativePrintAlphabetV1.printB();
         }).start();
     }
 }

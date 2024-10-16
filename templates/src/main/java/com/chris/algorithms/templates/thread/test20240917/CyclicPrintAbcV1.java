@@ -1,12 +1,12 @@
-package com.chris.algorithms.templates.thread;
+package com.chris.algorithms.templates.thread.test20240917;
 
 public class CyclicPrintAbcV1 {
-    private static String letter = "A";
+    private static char letter = 'A';
     private static final Object lock = new Object();
 
-    public static void print(String cur, String nxt) throws InterruptedException {
+    public static void print(char cur, char nxt) throws InterruptedException {
         synchronized (lock) {
-            while(!letter.equals(cur)) lock.wait();
+            while (!(letter == cur)) lock.wait();
             System.out.print(letter);
             letter = nxt;
             lock.notifyAll();
@@ -17,7 +17,7 @@ public class CyclicPrintAbcV1 {
         new Thread(() -> {
             for(int i = 0; i < 10; ++i) {
                 try {
-                    CyclicPrintAbcV1.print("A", "B");
+                    CyclicPrintAbcV1.print('A', 'B');
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -26,7 +26,7 @@ public class CyclicPrintAbcV1 {
         new Thread(() -> {
             for(int i = 0; i < 10; ++i) {
                 try {
-                    CyclicPrintAbcV1.print("B", "C");
+                    CyclicPrintAbcV1.print('B', 'C');
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
@@ -35,7 +35,7 @@ public class CyclicPrintAbcV1 {
         new Thread(() -> {
             for(int i = 0; i < 10; ++i) {
                 try {
-                    CyclicPrintAbcV1.print("C", "A");
+                    CyclicPrintAbcV1.print('C', 'A');
                 } catch (InterruptedException e) {
                     throw new RuntimeException(e);
                 }
